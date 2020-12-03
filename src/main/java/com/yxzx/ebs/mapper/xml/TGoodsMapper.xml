@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxzx.ebs.mapper.TGoodsMapper">
+    <resultMap id="goodsMap" type="com.yxzx.ebs.entity.TGoods">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="price" property="price"/>
+        <result column="stock" property="stock"/>
+        <result column="description" property="description"/>
+        <!--配置一对一关系-->
+        <association property="type" javaType="com.yxzx.ebs.entity.TType">
+            <result column="type_id" property="id"></result>
+            <result column="type_name" property="name"></result>
+        </association>
+    </resultMap>
+    <!--商品分页查询-->
+    <select id="findByPage" resultMap="goodsMap">
+        SELECT g.*,t.name type_name
+        FROM t_goods g, t_type t
+        WHERE g.type_id = t.id
+    </select>
+
+
+</mapper>
